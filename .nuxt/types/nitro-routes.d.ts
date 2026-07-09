@@ -21,6 +21,19 @@ declare module "nitropack/types" {
     '/api/health': {
       'get': Simplify<Serialize<Awaited<ReturnType<typeof import('../../server/api/health.get').default>>>>
     }
+    '/api/ingredients': {
+      'get': Simplify<Serialize<Awaited<ReturnType<typeof import('../../server/api/ingredients/index.get').default>>>>
+      'post': Simplify<Serialize<Awaited<ReturnType<typeof import('../../server/api/ingredients/index.post').default>>>>
+    }
+    '/api/recipes/:id': {
+      'delete': Simplify<Serialize<Awaited<ReturnType<typeof import('../../server/api/recipes/[id].delete').default>>>>
+      'get': Simplify<Serialize<Awaited<ReturnType<typeof import('../../server/api/recipes/[id].get').default>>>>
+      'put': Simplify<Serialize<Awaited<ReturnType<typeof import('../../server/api/recipes/[id].put').default>>>>
+    }
+    '/api/recipes': {
+      'get': Simplify<Serialize<Awaited<ReturnType<typeof import('../../server/api/recipes/index.get').default>>>>
+      'post': Simplify<Serialize<Awaited<ReturnType<typeof import('../../server/api/recipes/index.post').default>>>>
+    }
     '/__nuxt_error': {
       'default': Simplify<Serialize<Awaited<ReturnType<typeof import('../../node_modules/.pnpm/@nuxt+nitro-server@4.4.8_@babel+plugin-syntax-typescript@7.29.7_@babel+core@7.29.7__db0_41c322dc680e60ae56c028a1c6287e82/node_modules/@nuxt/nitro-server/dist/runtime/handlers/renderer').default>>>>
     }
