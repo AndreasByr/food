@@ -29,6 +29,15 @@
       "@@/*": [
         "../*"
       ],
+      "vue-router": [
+        "../node_modules/vue-router"
+      ],
+      "vue-router/auto-routes": [
+        "../node_modules/vue-router/vue-router-auto-routes"
+      ],
+      "nuxt": [
+        "../node_modules/.pnpm/nuxt@4.4.8_@babel+plugin-syntax-jsx@7.29.7_@babel+core@7.29.7__@babel+plugin-syntax-typ_381a009cc2e1b95587fcad1f3851f277/node_modules/nuxt"
+      ],
       "@unhead/vue": [
         "../node_modules/@unhead/vue"
       ],
@@ -41,17 +50,8 @@
       "@vue/compiler-sfc": [
         "../node_modules/@vue/compiler-sfc"
       ],
-      "vue-router": [
-        "../node_modules/vue-router"
-      ],
       "@nuxt/schema": [
         "../node_modules/@nuxt/schema"
-      ],
-      "nuxt": [
-        "../node_modules/.pnpm/nuxt@4.4.8_@babel+plugin-syntax-jsx@7.29.7_@babel+core@7.29.7__@babel+plugin-syntax-typ_d741bb743484c8982d3bb57471e1af7b/node_modules/nuxt"
-      ],
-      "nitropack": [
-        "../node_modules/nitropack"
       ],
       "defu": [
         "../node_modules/defu"
@@ -68,8 +68,8 @@
       "crossws": [
         "../node_modules/crossws"
       ],
-      "vue-router/auto-routes": [
-        "../node_modules/vue-router/vue-router-auto-routes"
+      "nitropack": [
+        "../node_modules/nitropack"
       ],
       "vite/client": [
         "../node_modules/vite/client"
@@ -99,10 +99,13 @@
         "./*"
       ],
       "#internal/nuxt/paths": [
-        "../node_modules/.pnpm/@nuxt+nitro-server@4.4.8_@babel+plugin-syntax-typescript@7.29.7_@babel+core@7.29.7__db0_d48f01afba2ec52248f623aad850bf9f/node_modules/@nuxt/nitro-server/dist/runtime/utils/paths"
+        "../node_modules/.pnpm/@nuxt+nitro-server@4.4.8_6f454e65842d3b7a1bc86fd06ba06f83/node_modules/@nuxt/nitro-server/dist/runtime/utils/paths"
+      ],
+      "#pwa": [
+        "../node_modules/.pnpm/@vite-pwa+nuxt@1.1.1_magicast@0.5.3_vite@7.3.6_@types+node@26.1.1_jiti@2.7.0_terser@5.4_a40549a93aebd3820743b30da5f981c3/node_modules/@vite-pwa/nuxt/dist/runtime/composables/index"
       ],
       "#unhead/composables": [
-        "../node_modules/.pnpm/nuxt@4.4.8_@babel+plugin-syntax-jsx@7.29.7_@babel+core@7.29.7__@babel+plugin-syntax-typ_d741bb743484c8982d3bb57471e1af7b/node_modules/nuxt/dist/head/runtime/composables"
+        "../node_modules/.pnpm/nuxt@4.4.8_@babel+plugin-syntax-jsx@7.29.7_@babel+core@7.29.7__@babel+plugin-syntax-typ_381a009cc2e1b95587fcad1f3851f277/node_modules/nuxt/dist/head/runtime/composables"
       ]
     },
     "lib": [
@@ -117,6 +120,8 @@
     "./types/nitro-nuxt.d.ts",
     "../node_modules/.pnpm/@pinia+nuxt@0.11.3_magicast@0.5.3_pinia@3.0.4_typescript@5.9.3_vue@3.5.39_typescript@5.9.3__/node_modules/runtime/server",
     "../node_modules/.pnpm/@pinia+nuxt@0.11.3_magicast@0.5.3_pinia@3.0.4_typescript@5.9.3_vue@3.5.39_typescript@5.9.3__/node_modules/dist/runtime/server",
+    "../node_modules/.pnpm/@vite-pwa+nuxt@1.1.1_magicast@0.5.3_vite@7.3.6_@types+node@26.1.1_jiti@2.7.0_terser@5.4_a40549a93aebd3820743b30da5f981c3/node_modules/runtime/server",
+    "../node_modules/.pnpm/@vite-pwa+nuxt@1.1.1_magicast@0.5.3_vite@7.3.6_@types+node@26.1.1_jiti@2.7.0_terser@5.4_a40549a93aebd3820743b30da5f981c3/node_modules/dist/runtime/server",
     "../node_modules/runtime/server",
     "../node_modules/dist/runtime/server",
     "../server/**/*",
@@ -125,8 +130,9 @@
   ],
   "exclude": [
     "../node_modules",
-    "../node_modules/.pnpm/nuxt@4.4.8_@babel+plugin-syntax-jsx@7.29.7_@babel+core@7.29.7__@babel+plugin-syntax-typ_d741bb743484c8982d3bb57471e1af7b/node_modules/nuxt/node_modules",
+    "../node_modules/.pnpm/nuxt@4.4.8_@babel+plugin-syntax-jsx@7.29.7_@babel+core@7.29.7__@babel+plugin-syntax-typ_381a009cc2e1b95587fcad1f3851f277/node_modules/nuxt/node_modules",
     "../node_modules/.pnpm/@pinia+nuxt@0.11.3_magicast@0.5.3_pinia@3.0.4_typescript@5.9.3_vue@3.5.39_typescript@5.9.3__/node_modules/@pinia/nuxt/node_modules",
+    "../node_modules/.pnpm/@vite-pwa+nuxt@1.1.1_magicast@0.5.3_vite@7.3.6_@types+node@26.1.1_jiti@2.7.0_terser@5.4_a40549a93aebd3820743b30da5f981c3/node_modules/@vite-pwa/nuxt/node_modules",
     "../node_modules/@nuxt/devtools/node_modules",
     "../node_modules/@nuxt/telemetry/node_modules",
     "../dist"
