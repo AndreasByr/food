@@ -5,6 +5,7 @@ export default defineConfig({
   test: {
     environment: 'node',
     setupFiles: ['tests/setup.ts'],
+    include: ['tests/unit/**/*.test.ts', 'tests/integration/**/*.test.ts'],
     // Integration tests need a real DB and are slower.
     testTimeout: 30_000,
     hookTimeout: 30_000,

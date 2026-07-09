@@ -122,6 +122,7 @@ declare global {
   const useModel: typeof import('vue').useModel
   const useNuxtApp: typeof import('../../node_modules/.pnpm/nuxt@4.4.8_@babel+plugin-syntax-jsx@7.29.7_@babel+core@7.29.7__@babel+plugin-syntax-typ_d741bb743484c8982d3bb57471e1af7b/node_modules/nuxt/dist/app/nuxt').useNuxtApp
   const useNuxtData: typeof import('../../node_modules/.pnpm/nuxt@4.4.8_@babel+plugin-syntax-jsx@7.29.7_@babel+core@7.29.7__@babel+plugin-syntax-typ_d741bb743484c8982d3bb57471e1af7b/node_modules/nuxt/dist/app/composables/asyncData').useNuxtData
+  const useNuxtDevTools: typeof import('../../node_modules/@nuxt/devtools/dist/runtime/use-nuxt-devtools').useNuxtDevTools
   const useOnboarding: typeof import('../../app/composables/useOnboarding').useOnboarding
   const usePinia: typeof import('../../node_modules/.pnpm/@pinia+nuxt@0.11.3_magicast@0.5.3_pinia@3.0.4_typescript@5.9.3_vue@3.5.39_typescript@5.9.3__/node_modules/@pinia/nuxt/dist/runtime/composables').usePinia
   const usePreviewMode: typeof import('../../node_modules/.pnpm/nuxt@4.4.8_@babel+plugin-syntax-jsx@7.29.7_@babel+core@7.29.7__@babel+plugin-syntax-typ_d741bb743484c8982d3bb57471e1af7b/node_modules/nuxt/dist/app/composables/preview').usePreviewMode
@@ -348,6 +349,7 @@ declare module 'vue' {
     readonly useModel: UnwrapRef<typeof import('vue')['useModel']>
     readonly useNuxtApp: UnwrapRef<typeof import('../../node_modules/.pnpm/nuxt@4.4.8_@babel+plugin-syntax-jsx@7.29.7_@babel+core@7.29.7__@babel+plugin-syntax-typ_d741bb743484c8982d3bb57471e1af7b/node_modules/nuxt/dist/app/nuxt')['useNuxtApp']>
     readonly useNuxtData: UnwrapRef<typeof import('../../node_modules/.pnpm/nuxt@4.4.8_@babel+plugin-syntax-jsx@7.29.7_@babel+core@7.29.7__@babel+plugin-syntax-typ_d741bb743484c8982d3bb57471e1af7b/node_modules/nuxt/dist/app/composables/asyncData')['useNuxtData']>
+    readonly useNuxtDevTools: UnwrapRef<typeof import('../../node_modules/@nuxt/devtools/dist/runtime/use-nuxt-devtools')['useNuxtDevTools']>
     readonly useOnboarding: UnwrapRef<typeof import('../../app/composables/useOnboarding')['useOnboarding']>
     readonly usePinia: UnwrapRef<typeof import('../../node_modules/.pnpm/@pinia+nuxt@0.11.3_magicast@0.5.3_pinia@3.0.4_typescript@5.9.3_vue@3.5.39_typescript@5.9.3__/node_modules/@pinia/nuxt/dist/runtime/composables')['usePinia']>
     readonly usePreviewMode: UnwrapRef<typeof import('../../node_modules/.pnpm/nuxt@4.4.8_@babel+plugin-syntax-jsx@7.29.7_@babel+core@7.29.7__@babel+plugin-syntax-typ_d741bb743484c8982d3bb57471e1af7b/node_modules/nuxt/dist/app/composables/preview')['usePreviewMode']>

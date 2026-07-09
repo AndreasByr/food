@@ -9,7 +9,7 @@ export default defineNuxtConfig({
   ssr: false,
   spaLoadingTemplate: true,
 
-  modules: ['@pinia/nuxt'],
+  modules: ['@pinia/nuxt', '@vite-pwa/nuxt'],
   css: ['~/assets/tokens.css'],
 
   runtimeConfig: {
@@ -67,5 +67,65 @@ export default defineNuxtConfig({
 
   typescript: {
     strict: true,
+  },
+
+  pwa: {
+    registerType: 'autoUpdate',
+    manifest: {
+      name: 'Foodora',
+      short_name: 'Foodora',
+      description: 'Foodora – deterministic meal planning',
+      theme_color: '#14213D',
+      background_color: '#F7F7F7',
+      display: 'standalone',
+      orientation: 'portrait',
+      scope: '/',
+      start_url: '/',
+      icons: [
+        {
+          src: 'pwa-192x192.png',
+          sizes: '192x192',
+          type: 'image/png',
+          purpose: 'any',
+        },
+        {
+          src: 'pwa-512x512.png',
+          sizes: '512x512',
+          type: 'image/png',
+          purpose: 'any',
+        },
+      ],
+    },
+    workbox: {
+      // Pre-cache the SPA shell and core assets.
+      globPatterns: ['**/*.{js,css,html,png,svg,ico,webmanifest,json}'],
+      navigateFallback: '/',
+      runtimeCaching: [
+        {
+          urlPattern: /^https:\/\/fonts\.googleapis\.com\/.*/,
+          handler: 'CacheFirst',
+          options: {
+            cacheName: 'google-fonts-stylesheets',
+            expiration: { maxEntries: 10, maxAgeSeconds: 60 * 60 * 24 * 365 },
+          },
+        },
+        {
+          urlPattern: /^https:\/\/fonts\.gstatic\.com\/.*/,
+          handler: 'CacheFirst',
+          options: {
+            cacheName: 'google-fonts-webfonts',
+            expiration: { maxEntries: 30, maxAgeSeconds: 60 * 60 * 24 * 365 },
+          },
+        },
+      ],
+    },
+    client: {
+      installPrompt: true,
+      periodicSyncForUpdates: 3600,
+    },
+    devOptions: {
+      enabled: true,
+      type: 'module',
+    },
   },
 });

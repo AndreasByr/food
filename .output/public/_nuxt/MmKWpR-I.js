@@ -1,0 +1,1 @@
+function c(a){const s=a,o=s.data?.statusCode??s.statusCode??0,n=s.data?.message??s.statusMessage??s.message??"Ein unbekannter Fehler ist aufgetreten.",t={},r=s.data?.errors;if(r)for(const[i,e]of Object.entries(r))Array.isArray(e)&&e.length>0&&(t[i]=e[0]);return{message:n,fields:t,statusCode:o}}export{c as p};

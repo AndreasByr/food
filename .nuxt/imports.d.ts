@@ -39,3 +39,4 @@ export { useAuthStore, AuthUser, AuthSession, LoginInput, RegisterInput } from '
 export { useRecipeStore, Ingredient, RecipeIngredient, Macros, RecipeSummary, RecipeDetail, CreateRecipeLineInput, CreateRecipePayload, CreateIngredientPayload } from '../app/stores/recipes';
 export { useThemeStore, ThemeMode } from '../app/stores/theme';
 export { defineStore, acceptHMRUpdate, usePinia, storeToRefs } from '../node_modules/.pnpm/@pinia+nuxt@0.11.3_magicast@0.5.3_pinia@3.0.4_typescript@5.9.3_vue@3.5.39_typescript@5.9.3__/node_modules/@pinia/nuxt/dist/runtime/composables';
+export { useNuxtDevTools } from '../node_modules/@nuxt/devtools/dist/runtime/use-nuxt-devtools';
