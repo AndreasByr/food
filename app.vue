@@ -1,11 +1,13 @@
 <template>
   <div class="foodora-root">
     <NuxtRouteAnnouncer />
-    <NuxtPage />
+    <NuxtLayout>
+      <NuxtPage />
+    </NuxtLayout>
   </div>
 </template>
 
 <script setup lang="ts">
-// S01 placeholder shell — real UI lands in S03 (Mobile-First UI-Grundgerüst).
-// Kept intentionally minimal so the backend can boot and serve /api/* without a UI surface.
+// Mobile-first SPA shell: NuxtLayout renders the active layout (default for tabs,
+// none/full-screen for auth pages), NuxtPage renders the route component.
 </script>
