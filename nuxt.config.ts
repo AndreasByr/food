@@ -18,6 +18,12 @@ export default defineNuxtConfig({
     jwtSecret: process.env.JWT_SECRET ?? '',
     jwtAccessTtlSec: Number(process.env.JWT_ACCESS_TTL ?? 900),
     jwtRefreshTtlSec: Number(process.env.JWT_REFRESH_TTL ?? 604800),
+    public: {
+      // Base URL for API calls. Empty means same-origin (PWA/web).
+      // In the Tauri shell this is overridden at build time via
+      // NUXT_PUBLIC_API_BASE_URL to point at the deployed backend.
+      apiBaseUrl: process.env.NUXT_PUBLIC_API_BASE_URL ?? '',
+    },
   },
 
   app: {

@@ -51,7 +51,7 @@ export default defineConfig({
       imports: [
         { vue: ['ref', 'computed', 'watch', 'onMounted', 'readonly', 'nextTick'] },
         { pinia: ['defineStore'] },
-        { [resolve(__dirname, 'nuxt-globals.ts')]: ['$fetch', 'navigateTo', 'definePageMeta', 'useRoute'] },
+        { [resolve(__dirname, 'nuxt-globals.ts')]: ['$fetch', 'navigateTo', 'definePageMeta', 'useRoute', 'useRuntimeConfig'] },
         { [resolve(appDir, 'stores/auth.ts')]: ['useAuthStore'] },
         { [resolve(appDir, 'stores/theme.ts')]: ['useThemeStore'] },
         { [resolve(appDir, 'stores/recipes.ts')]: ['useRecipeStore'] },

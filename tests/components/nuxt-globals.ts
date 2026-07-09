@@ -14,3 +14,4 @@ export const $fetch = vi.fn();
 export const navigateTo = vi.fn(() => Promise.resolve(undefined));
 export const definePageMeta = () => {};
 export const useRoute = () => currentRoute;
+export const useRuntimeConfig = () => ({ public: { apiBaseUrl: '' } });

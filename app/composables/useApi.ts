@@ -11,8 +11,21 @@
 
 type FetchOptions = NonNullable<Parameters<typeof $fetch>[1]>;
 
+function isRelativeUrl(url: string): boolean {
+  return !/^https?:\/\//i.test(url) && !url.startsWith('//');
+}
+
 export function useApi() {
   const auth = useAuthStore();
+  const { public: publicConfig } = useRuntimeConfig();
+  const apiBaseUrl = publicConfig.apiBaseUrl as string;
+
+  function resolveUrl(url: string): string {
+    if (!apiBaseUrl || !isRelativeUrl(url)) return url;
+    const base = apiBaseUrl.replace(/\/$/, '');
+    const path = url.startsWith('/') ? url : `/${url}`;
+    return `${base}${path}`;
+  }
 
   async function request<T>(
     url: string,
@@ -27,8 +40,10 @@ export function useApi() {
       headers.Authorization = `Bearer ${auth.accessToken}`;
     }
 
+    const resolvedUrl = resolveUrl(url);
+
     try {
-      return await $fetch<T>(url, { ...fetchOptions, headers });
+      return await $fetch<T>(resolvedUrl, { ...fetchOptions, headers });
     } catch (rawError) {
       const error = rawError as { statusCode?: number };
       if (error.statusCode === 401 && !_retry && auth.refreshToken) {
@@ -42,6 +57,7 @@ export function useApi() {
   }
 
   return {
+    apiBaseUrl,
     request,
     get: <T>(url: string, options?: FetchOptions) =>
       request<T>(url, { ...options, method: 'GET' }),
