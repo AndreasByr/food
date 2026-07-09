@@ -1,0 +1,28 @@
+# Build artifacts
+.output
+.nuxt
+dist
+src-tauri/target
+node_modules
+
+# Secrets / local env
+.env
+.env.*
+.env.example
+
+# Git / IDE
+.git
+.gitignore
+*.md
+.vscode
+.idea
+
+# Temp / logs
+tmp
+*.log
+npm-debug.log*
+.DS_Store
+
+# Docker itself
+Dockerfile
+.dockerignore
