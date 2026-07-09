@@ -58,7 +58,8 @@ export function createAuthError(message = 'Missing or invalid token') {
 }
 
 /**
- * Creates a 409 Conflict error (e.g. duplicate email on register).
+ * Creates a 409 Conflict error (e.g. duplicate email on register, duplicate
+ * ingredient name per user).
  */
 export function createConflictError(message = 'Resource already exists') {
   return createError({
@@ -66,6 +67,23 @@ export function createConflictError(message = 'Resource already exists') {
     statusMessage: 'Conflict',
     data: {
       statusCode: 409,
+      message,
+    } satisfies ApiErrorBody,
+  });
+}
+
+/**
+ * Creates a 404 Not Found error. Used by single-resource endpoints
+ * (recipe detail/update/delete) when the resource does not exist or does not
+ * belong to the authenticated user. The two cases are intentionally
+ * indistinguishable to avoid leaking the existence of other users' resources.
+ */
+export function createNotFoundError(message = 'Resource not found') {
+  return createError({
+    statusCode: 404,
+    statusMessage: 'Not Found',
+    data: {
+      statusCode: 404,
       message,
     } satisfies ApiErrorBody,
   });
