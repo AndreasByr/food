@@ -8,23 +8,34 @@
     <section class="page-settings__cards">
       <article class="settings-card">
         <div class="settings-card__avatar">
-          <span class="settings-card__avatar-initial">?</span>
+          <span class="settings-card__avatar-initial">{{ avatarInitial }}</span>
         </div>
         <div class="settings-card__meta">
-          <h2 class="settings-card__name">Profil</h2>
-          <p class="settings-card__email">Anmeldung folgt in T03</p>
+          <h2 class="settings-card__name">{{ profileName }}</h2>
+          <p class="settings-card__email">{{ auth.user?.email }}</p>
         </div>
       </article>
 
-      <article class="settings-card">
+      <article class="settings-card settings-card--row">
         <div class="settings-card__row">
           <span class="settings-card__label">Design</span>
           <span class="settings-card__value">{{ themeLabel }}</span>
         </div>
+        <button
+          type="button"
+          class="settings-card__action settings-card__action--secondary"
+          @click="theme.toggle"
+        >
+          {{ theme.isDark.value ? 'Hell' : 'Dunkel' }} aktivieren
+        </button>
       </article>
 
-      <article class="settings-card">
-        <button type="button" class="settings-card__action" disabled>
+      <article class="settings-card settings-card--row">
+        <button
+          type="button"
+          class="settings-card__action settings-card__action--danger"
+          @click="handleLogout"
+        >
           Abmelden
         </button>
       </article>
@@ -33,12 +44,22 @@
 </template>
 
 <script setup lang="ts">
-// T05 will wire profile, theme toggle, and logout to real stores/composables.
-// For T02 the page renders the card structure so the shell is visible.
 definePageMeta({ middleware: 'auth' });
 
+const auth = useAuthStore();
 const themeStore = useThemeStore();
+const theme = useTheme();
+
 const themeLabel = computed(() => (themeStore.isDark ? 'Dunkel' : 'Hell'));
+const profileName = computed(() => auth.user?.name ?? auth.user?.email ?? 'Profil');
+const avatarInitial = computed(() =>
+  profileName.value.charAt(0).toLocaleUpperCase(),
+);
+
+async function handleLogout() {
+  await auth.logout();
+  await navigateTo('/login');
+}
 </script>
 
 <style scoped>
@@ -141,7 +162,35 @@ const themeLabel = computed(() => (themeStore.isDark ? 'Dunkel' : 'Hell'));
   background-color: var(--color-primary);
   border: none;
   border-radius: var(--radius-md);
-  cursor: not-allowed;
-  opacity: 0.5;
+  cursor: pointer;
+}
+
+.settings-card__action:hover {
+  background-color: var(--color-primary-hover);
+}
+
+.settings-card__action--secondary {
+  color: var(--color-text-on-primary);
+  background-color: var(--color-accent);
+}
+
+.settings-card__action--secondary:hover {
+  background-color: var(--color-accent-hover);
+}
+
+.settings-card__action--danger {
+  color: var(--color-error);
+  background-color: var(--color-surface);
+  border: var(--border-width) solid var(--color-error);
+}
+
+.settings-card__action--danger:hover {
+  background-color: var(--color-surface-alt);
+}
+
+.settings-card--row {
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--space-4);
 }
 </style>

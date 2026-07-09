@@ -2,8 +2,8 @@
 /// <reference path="nitro-layouts.d.ts" />
 /// <reference path="app.config.d.ts" />
 /// <reference path="runtime-config.d.ts" />
-/// <reference path="../../node_modules/.pnpm/@nuxt+nitro-server@4.4.8_@babel+plugin-syntax-typescript@7.29.7_@babel+core@7.29.7__db0_41c322dc680e60ae56c028a1c6287e82/node_modules/@nuxt/nitro-server/dist/index.d.mts" />
-/// <reference path="middleware.d.ts" />
+/// <reference path="../../node_modules/.pnpm/@nuxt+nitro-server@4.4.8_@babel+plugin-syntax-typescript@7.29.7_@babel+core@7.29.7__db0_d48f01afba2ec52248f623aad850bf9f/node_modules/@nuxt/nitro-server/dist/index.d.mts" />
+/// <reference path="nitro-middleware.d.ts" />
 
 import type { RuntimeConfig } from 'nuxt/schema'
 import type { H3Event } from 'h3'

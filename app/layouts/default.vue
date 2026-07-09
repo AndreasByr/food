@@ -1,5 +1,6 @@
 <template>
   <div class="app-shell">
+    <OnboardingBarrier />
     <main class="app-shell__main">
       <slot />
     </main>
@@ -10,6 +11,7 @@
 <script setup lang="ts">
 // Default mobile-first layout: scrollable main area + fixed bottom tab bar.
 // All protected tab pages use this layout; auth pages set `layout: false`.
+// The onboarding barrier is mounted once per app shell and gates first launch.
 </script>
 
 <style scoped>
