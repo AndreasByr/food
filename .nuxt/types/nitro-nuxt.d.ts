@@ -2,7 +2,7 @@
 /// <reference path="nitro-layouts.d.ts" />
 /// <reference path="app.config.d.ts" />
 /// <reference path="runtime-config.d.ts" />
-/// <reference path="../../node_modules/.pnpm/@nuxt+nitro-server@4.4.8_@babel+plugin-syntax-typescript@7.29.7_@babel+core@7.29.7__db0_b43d5c4e98a698ed2709dba8f3ea0b93/node_modules/@nuxt/nitro-server/dist/index.d.mts" />
+/// <reference path="../../node_modules/.pnpm/@nuxt+nitro-server@4.4.8_@babel+plugin-syntax-typescript@7.29.7_@babel+core@7.29.7__db0_41c322dc680e60ae56c028a1c6287e82/node_modules/@nuxt/nitro-server/dist/index.d.mts" />
 /// <reference path="middleware.d.ts" />
 
 import type { RuntimeConfig } from 'nuxt/schema'
