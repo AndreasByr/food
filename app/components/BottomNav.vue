@@ -55,7 +55,7 @@ function isActive(path: string): boolean {
   height: calc(var(--space-16) + env(safe-area-inset-bottom));
   padding-bottom: env(safe-area-inset-bottom);
   background-color: var(--color-surface);
-  border-top: 1px solid var(--color-border);
+  border-top: var(--border-width) solid var(--color-border);
   box-shadow: var(--elevation-2);
 }
 

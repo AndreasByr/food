@@ -76,7 +76,7 @@ const themeLabel = computed(() => (themeStore.isDark ? 'Dunkel' : 'Hell'));
   gap: var(--space-4);
   padding: var(--space-4);
   background-color: var(--color-surface);
-  border: 1px solid var(--color-border);
+  border: var(--border-width) solid var(--color-border);
   border-radius: var(--radius-md);
   box-shadow: var(--elevation-1);
 }

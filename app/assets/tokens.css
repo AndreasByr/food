@@ -69,6 +69,9 @@
   --space-12: 3rem;
   --space-16: 4rem;
 
+  /* === Border === */
+  --border-width: 1px;
+
   /* === Radius === */
   --radius-sm: 0.5rem;
   --radius-md: 0.75rem;

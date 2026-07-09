@@ -113,7 +113,7 @@ async function onSubmit() {
   max-width: 22rem;
   padding: var(--space-6);
   background-color: var(--color-surface);
-  border: 1px solid var(--color-border);
+  border: var(--border-width) solid var(--color-border);
   border-radius: var(--radius-lg);
   box-shadow: var(--elevation-2);
 }
@@ -158,7 +158,7 @@ async function onSubmit() {
   font: var(--text-body);
   color: var(--color-text-primary);
   background-color: var(--color-surface-alt);
-  border: 1px solid var(--color-border);
+  border: var(--border-width) solid var(--color-border);
   border-radius: var(--radius-md);
 }
 

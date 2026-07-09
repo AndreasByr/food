@@ -39,7 +39,7 @@ defineProps<{
   padding: var(--space-8) var(--space-6);
   text-align: center;
   background-color: var(--color-surface);
-  border: 1px solid var(--color-border);
+  border: var(--border-width) solid var(--color-border);
   border-radius: var(--radius-lg);
   box-shadow: var(--elevation-1);
 }
