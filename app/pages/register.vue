@@ -6,7 +6,32 @@
         <p class="auth-page__subtitle">Erstelle ein Konto, um Foodora zu nutzen.</p>
       </header>
 
+      <div
+        v-if="formError?.message"
+        class="auth-form__error"
+        role="alert"
+        aria-live="polite"
+      >
+        {{ formError.message }}
+      </div>
+
       <form class="auth-form" @submit.prevent="onSubmit">
+        <div class="auth-form__field">
+          <label for="register-name" class="auth-form__label">Name (optional)</label>
+          <input
+            id="register-name"
+            v-model="name"
+            type="text"
+            class="auth-form__input"
+            :class="{ 'auth-form__input--error': !!formError?.fields.name }"
+            placeholder="Max"
+            autocomplete="name"
+          />
+          <p v-if="formError?.fields.name" class="auth-form__field-error">
+            {{ formError.fields.name }}
+          </p>
+        </div>
+
         <div class="auth-form__field">
           <label for="register-email" class="auth-form__label">E-Mail</label>
           <input
@@ -14,10 +39,14 @@
             v-model="email"
             type="email"
             class="auth-form__input"
+            :class="{ 'auth-form__input--error': !!formError?.fields.email }"
             placeholder="name@beispiel.de"
             autocomplete="email"
             required
           />
+          <p v-if="formError?.fields.email" class="auth-form__field-error">
+            {{ formError.fields.email }}
+          </p>
         </div>
 
         <div class="auth-form__field">
@@ -27,15 +56,23 @@
             v-model="password"
             type="password"
             class="auth-form__input"
+            :class="{ 'auth-form__input--error': !!formError?.fields.password }"
             placeholder="Mindestens 8 Zeichen"
             autocomplete="new-password"
             minlength="8"
             required
           />
+          <p v-if="formError?.fields.password" class="auth-form__field-error">
+            {{ formError.fields.password }}
+          </p>
         </div>
 
-        <button type="submit" class="auth-form__submit" :disabled="!canSubmit">
-          Konto erstellen
+        <button
+          type="submit"
+          class="auth-form__submit"
+          :disabled="isSubmitting || !canSubmit"
+        >
+          {{ isSubmitting ? 'Konto wird erstellt...' : 'Konto erstellen' }}
         </button>
       </form>
 
@@ -49,21 +86,43 @@
 </template>
 
 <script setup lang="ts">
-// T03 will wire this form to the auth store and API client.
-// T02 only provides the visual shell and client-side validation skeleton.
+const auth = useAuthStore();
+
 definePageMeta({
   layout: false,
 });
 
+const name = ref('');
 const email = ref('');
 const password = ref('');
+const isSubmitting = ref(false);
+const formError = ref<ReturnType<typeof parseApiError> | null>(null);
 
-const canSubmit = computed(() => email.value.length > 0 && password.value.length >= 8);
+const canSubmit = computed(
+  () =>
+    email.value.length > 0 &&
+    password.value.length >= 8 &&
+    !isSubmitting.value,
+);
 
-function onSubmit() {
-  // Placeholder for T03 integration.
-  // eslint-disable-next-line no-console
-  console.warn('Register not yet wired to auth store (T03).');
+async function onSubmit() {
+  if (isSubmitting.value || !canSubmit.value) return;
+
+  formError.value = null;
+  isSubmitting.value = true;
+
+  try {
+    await auth.register({
+      email: email.value,
+      password: password.value,
+      name: name.value.trim() || undefined,
+    });
+    await navigateTo('/');
+  } catch (error) {
+    formError.value = parseApiError(error);
+  } finally {
+    isSubmitting.value = false;
+  }
 }
 </script>
 
@@ -176,5 +235,25 @@ function onSubmit() {
 .auth-page__link:hover {
   color: var(--color-accent-hover);
   text-decoration: underline;
+}
+
+.auth-form__error {
+  margin-bottom: var(--space-4);
+  padding: var(--space-3) var(--space-4);
+  font: var(--text-body-sm);
+  color: var(--color-error);
+  background-color: var(--color-surface-alt);
+  border-left: var(--space-1) solid var(--color-error);
+  border-radius: var(--radius-sm);
+}
+
+.auth-form__field-error {
+  margin: 0;
+  font: var(--text-caption);
+  color: var(--color-error);
+}
+
+.auth-form__input--error {
+  border-color: var(--color-error);
 }
 </style>

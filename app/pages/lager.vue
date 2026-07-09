@@ -18,6 +18,8 @@
 
 <script setup lang="ts">
 import IconStorage from '~/components/icons/IconStorage.vue';
+
+definePageMeta({ middleware: 'auth' });
 </script>
 
 <style scoped>

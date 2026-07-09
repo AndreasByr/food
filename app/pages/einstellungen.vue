@@ -35,6 +35,8 @@
 <script setup lang="ts">
 // T05 will wire profile, theme toggle, and logout to real stores/composables.
 // For T02 the page renders the card structure so the shell is visible.
+definePageMeta({ middleware: 'auth' });
+
 const themeStore = useThemeStore();
 const themeLabel = computed(() => (themeStore.isDark ? 'Dunkel' : 'Hell'));
 </script>

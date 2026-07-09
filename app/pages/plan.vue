@@ -20,6 +20,8 @@
 
 <script setup lang="ts">
 import IconPlan from '~/components/icons/IconPlan.vue';
+
+definePageMeta({ middleware: 'auth' });
 </script>
 
 <style scoped>

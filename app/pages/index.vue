@@ -18,6 +18,8 @@
 
 <script setup lang="ts">
 import IconToday from '~/components/icons/IconToday.vue';
+
+definePageMeta({ middleware: 'auth' });
 </script>
 
 <style scoped>

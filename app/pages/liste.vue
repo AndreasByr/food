@@ -18,6 +18,8 @@
 
 <script setup lang="ts">
 import IconList from '~/components/icons/IconList.vue';
+
+definePageMeta({ middleware: 'auth' });
 </script>
 
 <style scoped>
