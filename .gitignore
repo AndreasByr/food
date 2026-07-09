@@ -43,3 +43,10 @@ vendor/
 coverage/
 .cache/
 tmp/
+
+# ── Recipe image uploads (T04) ──
+# Files land in public/recipes/ at runtime via the image-upload flow. Keep the
+# directory tracked (so the storage path always exists after clone) but never
+# commit user-uploaded images.
+public/recipes/*
+!public/recipes/.gitkeep

@@ -6,6 +6,32 @@ import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 
 // ─────────────────────────────────────────────────────────────────────────────
+// Nitro auto-import polyfill for unit tests.
+//
+// Server utils like `createError` are auto-imported by Nitro at runtime. Unit
+// tests run in a plain Node/Vitest environment without those auto-imports, so
+// modules that reference `createError` (e.g. image-upload.ts) need a compatible
+// global. This shim builds an Error subclass with the H3 error shape
+// (`statusCode`, `statusMessage`, `data`) so unit tests can assert on it.
+// ─────────────────────────────────────────────────────────────────────────────
+class H3ErrorShim extends Error {
+  statusCode: number;
+  statusMessage: string;
+  data: unknown;
+  constructor(opts: { statusCode?: number; statusMessage?: string; message?: string; data?: unknown }) {
+    super(opts.message ?? opts.statusMessage ?? 'Error');
+    this.name = 'H3Error';
+    this.statusCode = opts.statusCode ?? 500;
+    this.statusMessage = opts.statusMessage ?? '';
+    this.data = opts.data;
+  }
+}
+if (!(globalThis as Record<string, unknown>).createError) {
+  (globalThis as Record<string, unknown>).createError = (opts: Record<string, unknown>) =>
+    new H3ErrorShim(opts as { statusCode?: number; statusMessage?: string; data?: unknown });
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
 // Test setup — runs once before all test suites.
 //
 // 1. Reads DATABASE_URL from env (must point to a test DB, never production).
