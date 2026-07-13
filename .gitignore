@@ -24,7 +24,8 @@ lpt[1-9].*
 *.swo
 *~
 .idea/
-.vscode/
+.vscode/*
+!.vscode/extensions.json
 *.code-workspace
 .env
 .env.*
@@ -44,6 +45,12 @@ vendor/
 coverage/
 .cache/
 tmp/
+*.db
+*.db-*
+*.sql
+*.dump
+*.sqlite
+*.sqlite3
 
 # ── Recipe image uploads (T04) ──
 # Files land in public/recipes/ at runtime via the image-upload flow. Keep the
