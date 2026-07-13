@@ -12,7 +12,7 @@ import * as schema from './schema';
 // ─────────────────────────────────────────────────────────────────────────────
 
 type DbClient = ReturnType<typeof postgres>;
-type DrizzleDb = ReturnType<typeof createDb>;
+type DrizzleDb = ReturnType<typeof createDb>["db"];
 
 interface GlobalWithDb {
   __foodoraDb__?: { client: DbClient; db: DrizzleDb };
@@ -59,7 +59,7 @@ export const db: DrizzleDb = (() => {
   if (!globalRef.__foodoraDb__) {
     globalRef.__foodoraDb__ = createDb();
   }
-  return globalRef.__foodoraDb__.db;
+  return globalRef.__foodoraDb__!.db;
 })();
 
 export { schema };

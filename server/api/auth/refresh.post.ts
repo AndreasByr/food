@@ -94,6 +94,10 @@ export default defineEventHandler(async (event) => {
     })
     .returning({ id: schema.refreshTokens.id });
 
+  if (!newRefreshRow) {
+    throw createAuthError('Failed to create refresh token');
+  }
+
   const refreshToken = await signRefreshToken(user.id, newRefreshRow.id);
   const tokenHash = hashRefreshToken(refreshToken);
 

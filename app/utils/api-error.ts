@@ -28,17 +28,21 @@ export function parseApiError(error: unknown): ParsedApiError {
 
   const statusCode =
     fetchError.data?.statusCode ?? fetchError.statusCode ?? 0;
-  const message =
-    fetchError.data?.message ??
-    fetchError.statusMessage ??
-    fetchError.message ??
-    'Ein unbekannter Fehler ist aufgetreten.';
+
+  let message = 'Ein unbekannter Fehler ist aufgetreten.';
+  if (fetchError.data?.message) {
+    message = fetchError.data.message;
+  } else if (fetchError.statusMessage) {
+    message = fetchError.statusMessage;
+  } else if (fetchError.message) {
+    message = fetchError.message;
+  }
 
   const fields: Record<string, string> = {};
   const fieldErrors = fetchError.data?.errors;
   if (fieldErrors) {
     for (const [key, messages] of Object.entries(fieldErrors)) {
-      if (Array.isArray(messages) && messages.length > 0) {
+      if (Array.isArray(messages) && messages.length > 0 && typeof messages[0] === 'string') {
         fields[key] = messages[0];
       }
     }

@@ -2,7 +2,7 @@ import { and, eq, sql } from 'drizzle-orm';
 import { db, schema } from '../../db/client';
 import { requireAuth } from '../../utils/require-auth';
 import { validateBody } from '../../utils/validation';
-import { createConflictError } from '../../utils/errors';
+import { createConflictError, createAuthError } from '../../utils/errors';
 import {
   createIngredientSchema,
   mapIngredient,
@@ -62,6 +62,10 @@ export default defineEventHandler(async (event) => {
       throw createConflictError('An ingredient with this name already exists');
     }
     throw err;
+  }
+
+  if (!row) {
+    throw createAuthError('Failed to create ingredient');
   }
 
   setResponseStatus(event, 201);

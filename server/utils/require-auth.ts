@@ -1,3 +1,4 @@
+import type { H3Event, EventHandlerRequest } from 'h3';
 import { createAuthError } from './errors';
 
 /**
@@ -12,10 +13,8 @@ import { createAuthError } from './errors';
  *     // user.id and user.email are typed and guaranteed non-null.
  *   });
  */
-export function requireAuth(event: {
-  context: { user?: { id: string; email: string } };
-}): { id: string; email: string } {
-  const user = event.context.user;
+export function requireAuth(event: H3Event<EventHandlerRequest>): { id: string; email: string } {
+  const user = event.context.user as { id: string; email: string } | undefined;
   if (!user) {
     throw createAuthError('Missing or invalid token');
   }
