@@ -1,0 +1,38 @@
+name: Test CI
+
+on:
+  push:
+    branches:
+      - 'm*'
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test:
+    name: Typecheck & Test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js and pnpm
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install pnpm via Corepack
+        run: |
+          corepack enable
+          corepack prepare pnpm@10.33.0 --activate
+          pnpm --version
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Run Nuxt typecheck
+        run: npx nuxi typecheck
+
+      - name: Run test suite
+        run: pnpm test
