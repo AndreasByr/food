@@ -58,3 +58,6 @@ tmp/
 # commit user-uploaded images.
 public/recipes/*
 !public/recipes/.gitkeep
+
+# ── GSD baseline (auto-generated) ──
+.vscode/
