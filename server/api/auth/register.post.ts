@@ -2,7 +2,7 @@ import { eq } from 'drizzle-orm';
 import { db, schema } from '../../db/client';
 import { hashPassword, signAccessToken, signRefreshToken, hashRefreshToken } from '../../utils/auth';
 import { registerSchema, validateBody } from '../../utils/validation';
-import { createConflictError } from '../../utils/errors';
+import { createConflictError, createAuthError } from '../../utils/errors';
 
 export default defineEventHandler(async (event) => {
   const body = await validateBody(event, registerSchema);
@@ -34,6 +34,10 @@ export default defineEventHandler(async (event) => {
       createdAt: schema.users.createdAt,
     });
 
+  if (!user) {
+    throw createAuthError('Failed to create user');
+  }
+
   // Issue tokens.
   const accessToken = await signAccessToken(user.id, user.email);
 
@@ -46,6 +50,10 @@ export default defineEventHandler(async (event) => {
       expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
     })
     .returning({ id: schema.refreshTokens.id });
+
+  if (!refreshRow) {
+    throw createAuthError('Failed to create refresh token');
+  }
 
   const refreshToken = await signRefreshToken(user.id, refreshRow.id);
   const tokenHash = hashRefreshToken(refreshToken);

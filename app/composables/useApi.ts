@@ -43,7 +43,7 @@ export function useApi() {
     const resolvedUrl = resolveUrl(url);
 
     try {
-      return await $fetch<T>(resolvedUrl, { ...fetchOptions, headers });
+      return (await $fetch(resolvedUrl, { ...fetchOptions, headers })) as T;
     } catch (rawError) {
       const error = rawError as { statusCode?: number };
       if (error.statusCode === 401 && !_retry && auth.refreshToken) {
@@ -61,12 +61,12 @@ export function useApi() {
     request,
     get: <T>(url: string, options?: FetchOptions) =>
       request<T>(url, { ...options, method: 'GET' }),
-    post: <T>(url: string, body: unknown, options?: FetchOptions) =>
-      request<T>(url, { ...options, method: 'POST', body }),
-    put: <T>(url: string, body: unknown, options?: FetchOptions) =>
-      request<T>(url, { ...options, method: 'PUT', body }),
-    patch: <T>(url: string, body: unknown, options?: FetchOptions) =>
-      request<T>(url, { ...options, method: 'PATCH', body }),
+    post: <T>(url: string, body?: unknown, options?: FetchOptions) =>
+      request<T>(url, { ...options, method: 'POST', body: body as BodyInit | Record<string, unknown> | undefined }),
+    put: <T>(url: string, body?: unknown, options?: FetchOptions) =>
+      request<T>(url, { ...options, method: 'PUT', body: body as BodyInit | Record<string, unknown> | undefined }),
+    patch: <T>(url: string, body?: unknown, options?: FetchOptions) =>
+      request<T>(url, { ...options, method: 'PATCH', body: body as BodyInit | Record<string, unknown> | undefined }),
     del: <T>(url: string, options?: FetchOptions) =>
       request<T>(url, { ...options, method: 'DELETE' }),
   };

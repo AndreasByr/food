@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import type { H3Event, EventHandlerRequest } from 'h3';
 import { createValidationError } from './errors';
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -59,7 +60,7 @@ export type RefreshInput = z.infer<typeof refreshSchema>;
  * messages that the UI can map directly to form fields.
  */
 export async function validateBody<T extends z.ZodType>(
-  event: { request: { json: () => Promise<unknown> } },
+  event: H3Event<EventHandlerRequest>,
   schema: T,
 ): Promise<z.infer<T>> {
   let raw: unknown;

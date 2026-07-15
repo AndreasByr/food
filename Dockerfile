@@ -36,13 +36,17 @@ ENV JWT_SECRET=${JWT_SECRET}
 ENV JWT_ACCESS_TTL=${JWT_ACCESS_TTL:-900}
 ENV JWT_REFRESH_TTL=${JWT_REFRESH_TTL:-604800}
 
-# Copy the built artifacts and production node_modules from the builder.
+# Copy the built artifacts, production node_modules, and migration files from the builder.
 COPY --from=builder /app/.output ./.output
 COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/package.json ./package.json
+COPY --from=builder /app/drizzle.config.ts ./drizzle.config.ts
+COPY --from=builder /app/drizzle ./drizzle
+COPY --from=builder /app/docker-start.sh ./docker-start.sh
+RUN chmod +x docker-start.sh
 
 # Expose the default Nitro node-server port.
 EXPOSE 3000
 
-# Start the Nitro server.
-CMD ["node", ".output/server/index.mjs"]
+# Start the Nitro server via the startup script (runs migrations first).
+CMD ["./docker-start.sh"]

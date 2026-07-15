@@ -1,0 +1,9 @@
+{
+  "recommendations": [
+    "vue.volar",
+    "bradlc.vscode-tailwindcss",
+    "dbaeumer.vscode-typescript-next",
+    "yoavbls.pretty-ts-errors",
+    "drazislaw.drizzle-sql"
+  ]
+}

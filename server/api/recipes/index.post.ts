@@ -10,7 +10,7 @@ import {
   buildRecipeDto,
 } from '../../utils/recipe-helpers';
 import { saveRecipeImage } from '../../utils/image-upload';
-import { createValidationError } from '../../utils/errors';
+import { createValidationError, createAuthError } from '../../utils/errors';
 import { z, type ZodType } from 'zod';
 
 /** Sentinel marking a multipart `recipe` part that failed JSON.parse. */
@@ -96,6 +96,10 @@ export default defineEventHandler(async (event) => {
       })
       .returning();
 
+    if (!recipe) {
+      throw createAuthError('Failed to create recipe');
+    }
+
     await tx.insert(schema.recipeIngredients).values(
       lines.map((line) => ({
         recipeId: recipe.id,
@@ -108,6 +112,10 @@ export default defineEventHandler(async (event) => {
 
     return recipe;
   });
+
+  if (!created) {
+    throw createAuthError('Failed to create recipe');
+  }
 
   setResponseStatus(event, 201);
   return buildRecipeDto(created.id);
