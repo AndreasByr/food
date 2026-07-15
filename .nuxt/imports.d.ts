@@ -40,4 +40,3 @@ export { useRecipeStore, Ingredient, RecipeIngredient, Macros, RecipeSummary, Re
 export { useThemeStore, ThemeMode } from '../app/stores/theme';
 export { defineStore, acceptHMRUpdate, usePinia, storeToRefs } from '../node_modules/.pnpm/@pinia+nuxt@0.11.3_magicast@0.5.3_pinia@3.0.4_typescript@5.9.3_vue@3.5.39_typescript@5.9.3__/node_modules/@pinia/nuxt/dist/runtime/composables';
 export { usePWA, useTransparentPwaIcon, useMaskablePwaIcon, useFaviconPwaIcon, useApplePwaIcon, useAppleSplashScreenPwaIcon } from '../node_modules/.pnpm/@vite-pwa+nuxt@1.1.1_magicast@0.5.3_vite@7.3.6_@types+node@26.1.1_jiti@2.7.0_terser@5.4_a40549a93aebd3820743b30da5f981c3/node_modules/@vite-pwa/nuxt/dist/runtime/composables/index';
-export { useNuxtDevTools } from '../node_modules/@nuxt/devtools/dist/runtime/use-nuxt-devtools';

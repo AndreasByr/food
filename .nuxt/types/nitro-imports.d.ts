@@ -8,8 +8,8 @@ declare global {
   const RECIPES_DIR: typeof import('../../server/utils/image-upload').RECIPES_DIR
   const RECIPES_SUBDIR: typeof import('../../server/utils/image-upload').RECIPES_SUBDIR
   const ZERO_MACROS: typeof import('../../server/utils/macros').ZERO_MACROS
-  const __buildAssetsURL: typeof import('../../node_modules/.pnpm/@nuxt+nitro-server@4.4.8_6f454e65842d3b7a1bc86fd06ba06f83/node_modules/@nuxt/nitro-server/dist/runtime/utils/paths').buildAssetsURL
-  const __publicAssetsURL: typeof import('../../node_modules/.pnpm/@nuxt+nitro-server@4.4.8_6f454e65842d3b7a1bc86fd06ba06f83/node_modules/@nuxt/nitro-server/dist/runtime/utils/paths').publicAssetsURL
+  const __buildAssetsURL: typeof import('../../node_modules/.pnpm/@nuxt+nitro-server@4.4.8_a9c4d48f826784c493e4c6d2edb0b2f0/node_modules/@nuxt/nitro-server/dist/runtime/utils/paths').buildAssetsURL
+  const __publicAssetsURL: typeof import('../../node_modules/.pnpm/@nuxt+nitro-server@4.4.8_a9c4d48f826784c493e4c6d2edb0b2f0/node_modules/@nuxt/nitro-server/dist/runtime/utils/paths').publicAssetsURL
   const appendCorsHeaders: typeof import('../../node_modules/h3').appendCorsHeaders
   const appendCorsPreflightHeaders: typeof import('../../node_modules/h3').appendCorsPreflightHeaders
   const appendHeader: typeof import('../../node_modules/h3').appendHeader
@@ -40,7 +40,7 @@ declare global {
   const createRouter: typeof import('../../node_modules/h3').createRouter
   const createValidationError: typeof import('../../server/utils/errors').createValidationError
   const defaultContentType: typeof import('../../node_modules/h3').defaultContentType
-  const defineAppConfig: typeof import('../../node_modules/.pnpm/@nuxt+nitro-server@4.4.8_6f454e65842d3b7a1bc86fd06ba06f83/node_modules/@nuxt/nitro-server/dist/runtime/utils/config').defineAppConfig
+  const defineAppConfig: typeof import('../../node_modules/.pnpm/@nuxt+nitro-server@4.4.8_a9c4d48f826784c493e4c6d2edb0b2f0/node_modules/@nuxt/nitro-server/dist/runtime/utils/config').defineAppConfig
   const defineCachedEventHandler: typeof import('../../node_modules/nitropack/dist/runtime/internal/cache').defineCachedEventHandler
   const defineCachedFunction: typeof import('../../node_modules/nitropack/dist/runtime/internal/cache').defineCachedFunction
   const defineEventHandler: typeof import('../../node_modules/h3').defineEventHandler
@@ -212,8 +212,8 @@ export { getRouteRules } from 'nitropack/runtime/internal/route-rules';
 export { useEvent } from 'nitropack/runtime/internal/context';
 export { defineTask, runTask } from 'nitropack/runtime/internal/task';
 export { defineNitroErrorHandler } from 'nitropack/runtime/internal/error/utils';
-export { buildAssetsURL as __buildAssetsURL, publicAssetsURL as __publicAssetsURL } from '/home/andreas/workspace/food/node_modules/.pnpm/@nuxt+nitro-server@4.4.8_6f454e65842d3b7a1bc86fd06ba06f83/node_modules/@nuxt/nitro-server/dist/runtime/utils/paths';
-export { defineAppConfig } from '/home/andreas/workspace/food/node_modules/.pnpm/@nuxt+nitro-server@4.4.8_6f454e65842d3b7a1bc86fd06ba06f83/node_modules/@nuxt/nitro-server/dist/runtime/utils/config';
+export { buildAssetsURL as __buildAssetsURL, publicAssetsURL as __publicAssetsURL } from '/home/andreas/workspace/food/node_modules/.pnpm/@nuxt+nitro-server@4.4.8_a9c4d48f826784c493e4c6d2edb0b2f0/node_modules/@nuxt/nitro-server/dist/runtime/utils/paths';
+export { defineAppConfig } from '/home/andreas/workspace/food/node_modules/.pnpm/@nuxt+nitro-server@4.4.8_a9c4d48f826784c493e4c6d2edb0b2f0/node_modules/@nuxt/nitro-server/dist/runtime/utils/config';
 export { hashPassword, verifyPassword, signAccessToken, signRefreshToken, verifyAccessToken, verifyRefreshToken, hashRefreshToken } from '/home/andreas/workspace/food/server/utils/auth';
 export { createValidationError, createAuthError, createConflictError, createNotFoundError, createRateLimitError } from '/home/andreas/workspace/food/server/utils/errors';
 export { PUBLIC_DIR, RECIPES_DIR, RECIPES_SUBDIR, MAX_IMAGE_BYTES, ALLOWED_IMAGE_MIME, validateImageFile, generateImageFilename, resolveRecipeImagePath, saveRecipeImage, removeRecipeImage, statRecipeImage, toPublicUrl } from '/home/andreas/workspace/food/server/utils/image-upload';
