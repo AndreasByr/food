@@ -521,12 +521,27 @@ umgeht die Allowlist.
 ### Framelink MCP for Figma
 
 Das Standard-Tool ist [Framelink MCP for Figma](https://github.com/GLips/Figma-Context-MCP)
-(`figma-developer-mcp` via npx).
+(`figma-developer-mcp` via npx oder global installiert).
 
 ### Figma Personal Access Token
 
 Erstellen unter: Figma > Settings > Personal Access Tokens
 https://help.figma.com/hc/en-us/articles/8085703771159-Manage-personal-access-tokens
+
+### Installation: Global statt npx (vermeidet Timeout)
+
+**Problem:** `npx -y figma-developer-mcp --stdio` lädt beim ersten Aufruf das Package
+herunter (~50 MB). GSD-Pi's MCP-Probe-Timeout beträgt nur 10 Sekunden
+(`MCP_STATUS_PROBE_TIMEOUT_MS = 10_000` in `commands-mcp-status.js`). Der Download
+dauert länger → Timeout-Fehler: `MCP error -32001: Request timed out`.
+
+**Lösung:** Package global installieren und direkt aufrufen:
+
+```bash
+npm install -g figma-developer-mcp
+which figma-developer-mcp   # Pfad verifizieren
+figma-developer-mcp --version
+```
 
 ### Config-Eintrag
 
@@ -534,8 +549,8 @@ https://help.figma.com/hc/en-us/articles/8085703771159-Manage-personal-access-to
 {
   "mcpServers": {
     "figma": {
-      "command": "npx",
-      "args": ["-y", "figma-developer-mcp", "--stdio"],
+      "command": "figma-developer-mcp",
+      "args": ["--stdio"],
       "env": {
         "FIGMA_API_KEY": "<dein-figma-token>"
       }
@@ -544,11 +559,56 @@ https://help.figma.com/hc/en-us/articles/8085703771159-Manage-personal-access-to
 }
 ```
 
+### Design-Datei in GSD-Pi-Kontext eintragen
+
+Damit GSD-Pi die Design-Datei bei Design-Entscheidungen nutzt, muss sie in
+`.gsd/CONTEXT.md` (wird in System-Prompt injiziert) referenziert werden:
+
+```markdown
+### Design File
+
+**Primary design file:** `https://www.figma.com/design/<fileKey>/<name>?node-id=<nodeId>`
+
+- File key: `<fileKey>`
+- Root node: `<nodeId>`
+
+Use this design file for ALL UI/UX decisions. Before implementing any frontend
+component, page, or layout, fetch the relevant Figma data first:
+
+    mcp_call(server="figma", tool="get_figma_data", args={"fileKey": "<fileKey>", "nodeId": "<nodeId>"})
+```
+
+Zusaetzlich eine Regel in `.gsd/KNOWLEDGE.md` ergaenzen:
+
+```markdown
+| 3 | design | Bei allen UI/UX-Entscheidungen zuerst die Figma-Design-Datei abrufen. Kein Frontend-Code ohne vorherigen Figma-Abgleich. | Das Projekt hat eine verbindliche Figma-Design-Datei. Alle Komponenten, Layouts und Styles muessen dem Design entsprechen. | 2026-07-15 |
+```
+
+### Verfuegbare Tools
+
+| Tool | Parameter | Beschreibung |
+|------|-----------|-------------|
+| `get_figma_data` | `fileKey` (required), `nodeId` (optional) | Fetch Figma file data (layout, content, visuals, components) |
+| `download_figma_images` | `fileKey`, `nodes` (array), `localPath` | Download SVG/PNG images from Figma |
+
 ### Nutzung in GSD-Pi
 
 ```
 mcp_discover(server="figma")
-mcp_call(server="figma", tool="download_figma_images", args={"fileKey": "...", "nodeIds": ["..."]})
+mcp_call(server="figma", tool="get_figma_data", args={"fileKey": "5zmzmlYoZRpuF0kBjngCCc", "nodeId": "2-2"})
+mcp_call(server="figma", tool="download_figma_images", args={"fileKey": "...", "nodes": [...], "localPath": "public/images"})
+```
+
+### Figma URL-Format
+
+```
+https://www.figma.com/design/<fileKey>/<name>?node-id=<nodeId>&t=<token>
+
+Beispiel:
+https://www.figma.com/design/5zmzmlYoZRpuF0kBjngCCc/Ohne-Namen?node-id=2-2&t=Re9A93O9yXtSb6zP-1
+
+fileKey = 5zmzmlYoZRpuF0kBjngCCc
+nodeId  = 2-2
 ```
 
 ---
@@ -571,6 +631,21 @@ mcp_call(server="figma", tool="download_figma_images", args={"fileKey": "...", "
 oder enthalten keinen `mcpServers`-Schlüssel.
 
 **Lösung:** Alle drei Dateien anlegen (siehe [Schritt 7](#schritt-7-mcp-config-für-gsd-pi-anlegen)).
+
+### "figma (stdio) — error: MCP error -32001: Request timed out"
+
+**Ursache:** `npx -y figma-developer-mcp --stdio` lädt beim ersten Aufruf das Package
+herunter (~50 MB). GSD-Pi's MCP-Probe-Timeout beträgt nur 10 Sekunden. Der Download
+dauert länger → Timeout.
+
+**Lösung:** Package global installieren und direkt aufrufen:
+
+```bash
+npm install -g figma-developer-mcp
+```
+
+Dann in `.gsd/mcp.json` den `command` von `npx` auf `figma-developer-mcp` ändern
+und `args` auf `["--stdio"]` reduzieren.
 
 ### Embedder läuft auf `mock` (keine semantische Suche)
 
@@ -674,6 +749,20 @@ repowise überschreibt nicht die bestehende `AGENTS.md`. Es generiert eine separ
 `.claude/CLAUDE.md` für Claude Code. GSD-Pi liest diese Datei nicht — für GSD-Pi
 müssen die Anweisungen in `.gsd/CONTEXT.md` stehen.
 
+### 11. Figma MCP: `npx` verursacht Timeout bei erster Verbindung
+
+`npx -y figma-developer-mcp --stdio` lädt beim ersten Aufruf das Package herunter.
+GSD-Pi's MCP-Probe-Timeout (10 Sekunden) reicht nicht aus. Lösung: Package global
+installieren (`npm install -g figma-developer-mcp`) und direkt als `figma-developer-mcp`
+aufrufen statt über `npx`.
+
+### 12. Figma Design-Datei muss in `.gsd/CONTEXT.md` referenziert werden
+
+Damit GSD-Pi die Figma-Design-Datei bei Design-Entscheidungen nutzt, muss sie
+explizit in `.gsd/CONTEXT.md` mit File-Key und Node-ID eingetragen werden.
+Zusätzlich eine Regel in `.gsd/KNOWLEDGE.md` ergänzen: "Kein Frontend-Code ohne
+vorherigen Figma-Abgleich."
+
 ---
 
 ## Checkliste für neue Projekte
@@ -683,15 +772,20 @@ müssen die Anweisungen in `.gsd/CONTEXT.md` stehen.
 - [ ] `repowise[openai]` installiert (`repowise --version`)
 - [ ] Ollama Cloud API-Key besorgt
 - [ ] Figma Personal Access Token besorgt (optional)
+- [ ] `figma-developer-mcp` global installiert (`npm install -g figma-developer-mcp`)
 - [ ] Provider-Test im Wegwerf-Verzeichnis durchgeführt (Fake-Key → 401 von Ollama)
 - [ ] Provider-Test mit echtem Key erfolgreich (Wiki-Seiten generiert)
 - [ ] `repowise init` im Projekt ausgeführt
 - [ ] `.gitignore` um `.repowise/` ergänzt
 - [ ] `.gsd/mcp.json` angelegt (mit `env`-Feld für API-Keys)
 - [ ] `~/.gsd/mcp.json` angelegt (Global, mit absolutem Pfad)
-- [ ] `.gsd/CONTEXT.md` um MCP-Tool-Anweisungen ergänzt
+- [ ] `.gsd/CONTEXT.md` um MCP-Tool-Anweisungen ergänzt (repowise + figma)
 - [ ] `.gsd/KNOWLEDGE.md` um repowise-Regel ergänzt
+- [ ] `.gsd/KNOWLEDGE.md` um Figma-Design-Regel ergänzt (falls Design-Datei vorhanden)
+- [ ] Figma-Design-Datei in `.gsd/CONTEXT.md` referenziert (fileKey + nodeId)
 - [ ] GSD-Pi neu gestartet
-- [ ] `/gsd mcp` zeigt repowise (und figma) als konfiguriert
+- [ ] `/gsd mcp` zeigt repowise und figma als konfiguriert
 - [ ] `/gsd mcp discover repowise` listet Tools auf
+- [ ] `/gsd mcp check figma` zeigt "connected" (kein Timeout)
 - [ ] `mcp_call(server="repowise", tool="get_overview", args={})` funktioniert
+- [ ] `mcp_call(server="figma", tool="get_figma_data", args={"fileKey": "..."})` funktioniert
